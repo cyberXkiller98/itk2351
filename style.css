@@ -1,0 +1,145 @@
+:root {
+  --bg: #f8f9fb;
+  --primary: #005b96;
+  --text: #222;
+  --accent: #0084ff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* Header */
+.header {
+  background: var(--primary);
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  position: sticky;
+  top: 0;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.nav {
+  display: flex;
+  gap: 15px;
+}
+
+.nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.nav a:hover {
+  text-decoration: underline;
+}
+
+/* Mobile menu */
+.menu-btn {
+  display: none;
+  font-size: 1.5em;
+  background: none;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.hero {
+  background: linear-gradient(135deg, #007bff, #00a2ff);
+  color: white;
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.section {
+  padding: 40px 20px;
+  max-width: 900px;
+  margin: auto;
+}
+
+.section h2 {
+  color: var(--primary);
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.schedule {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.schedule th,
+.schedule td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.card img {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.footer {
+  text-align: center;
+  background: var(--primary);
+  color: white;
+  padding: 10px;
+  margin-top: 40px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .nav {
+    display: none;
+    flex-direction: column;
+    background: var(--primary);
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 180px;
+    text-align: right;
+    padding: 10px;
+  }
+
+  .nav.active {
+    display: flex;
+  }
+
+  .menu-btn {
+    display: block;
+  }
+}
