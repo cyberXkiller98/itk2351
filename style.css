@@ -99,47 +99,34 @@ body {
 
 .schedule th,
 .schedule td {
-  /* vertical-align: top;
-  padding: 10px;
-  border: 1px solid #ccc;
-  height: 120px; */
-  min-height: 120px;
-  min-width: 60px;
+  border: 1px solid #ddd;
+  text-align: center;
+  width: 16.66%;
+  padding: 0;
+}
+
+.schedule tbody tr {
+  height: 130px; 
 }
 
 .schedule thead th {
   background-color: #f0f0f0;
-  text-align: center;
+  padding: 10px;
 }
 
 .lesson {
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px;
   background-color: #f9f9f9;
   border: 1px solid #ddd;
-  padding: 8px;
   border-radius: 4px;
-  height: 100%;
-  box-sizing: border-box;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
-}
-
-.schedule tbody td {
-  padding: 10px;
-  border: 1px solid #ddd;
-  vertical-align: top;
-  text-align: left;
-}
-
-.schedule tbody td strong {
-  display: block;
-  margin-bottom: 4px;
-  color: #000;
-}
-
-.schedule tbody td span {
-  font-size: 13px;
-  color: #555;
+  text-align: center;
 }
 
 .schedule tbody tr:nth-child(even) {
@@ -149,6 +136,7 @@ body {
 .schedule tbody tr:hover {
   background-color: #f0f8ff;
 }
+
 
 .section h2 {
   font-size: 28px;
