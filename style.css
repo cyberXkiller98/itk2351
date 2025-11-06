@@ -47,7 +47,7 @@ body {
 }
 
 .nav a {
-  color: white;
+  color: var(--text);
   text-decoration: none;
   font-weight: 500;
 }
@@ -239,7 +239,8 @@ body {
 }
 
 .dark-theme .footer {
-  background: var(--primary);
+  background: var(--footer-bg);
+  color: var(--text);
 }
 
 .theme-btn {
