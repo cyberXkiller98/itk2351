@@ -104,6 +104,7 @@ body {
   border: 1px solid #ccc;
   height: 120px; */
   min-height: 120px;
+  min-width: 60px;
 }
 
 .schedule thead th {
