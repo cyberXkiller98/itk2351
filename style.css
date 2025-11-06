@@ -99,10 +99,11 @@ body {
 
 .schedule th,
 .schedule td {
-  vertical-align: top;
+  /* vertical-align: top;
   padding: 10px;
   border: 1px solid #ccc;
-  height: 120px;
+  height: 120px; */
+  min-height: 120px;
 }
 
 .schedule thead th {
