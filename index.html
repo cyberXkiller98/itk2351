@@ -52,6 +52,8 @@
     </table>
   </section> -->
 
+  <button id="themeToggle" class="theme-btn">🌙</button>
+
   <section id="schedule" class="section">
   <h2>Расписание</h2>
   <table class="schedule">
@@ -223,5 +225,20 @@
   <footer class="footer">
     <p>© 2025 ИТК-23-51 ТИФТ. Все права защищены.</p>
   </footer>
+  <script>
+    const themeToggle = document.getElementById("themeToggle");
+
+    themeToggle.addEventListener("click", () => {
+      document.body.classList.toggle("dark-theme");
+      themeToggle.textContent = document.body.classList.contains("dark-theme") ? "☀️" : "🌙";
+      localStorage.setItem("theme", document.body.classList.contains("dark-theme") ? "dark" : "light");
+    });
+
+    if (localStorage.getItem("theme") === "dark") {
+      document.body.classList.add("dark-theme");
+      themeToggle.textContent = "☀️";
+    }
+  </script>
+
 </body>
 </html>
