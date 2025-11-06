@@ -168,18 +168,6 @@ body {
       border: 1px solid #f0f0f0
   }
   
-  .time-table-wrapper .time-table .table-column .table-header>.ant-flex h3 {
-      font-size: 24px;
-      line-height: 32px
-  }
-  
-  .time-table-wrapper .time-table .table-column .table-header>.ant-flex span {
-      font-size: 12px;
-      line-height: 16px;
-      color: #00000073;
-      transform: translateY(-4px)
-  }
-  
   .time-table-wrapper .time-table .table-column .table-cell {
       background-color: #fff;
       font-size: 13px
@@ -254,10 +242,6 @@ body {
       top: -2px
   }
   
-  .time-table-wrapper .time-table .day-column--wrapper .day-column .table-body .schedule-card .ant-card-body {
-      padding: 4px!important
-  }
-  
   .time-table-wrapper .time-table .day-column--wrapper .day-column .table-body .table-cell {
       border: 1px solid #f0f0f0;
       position: relative
@@ -287,9 +271,5 @@ body {
   
   .dark-theme .table-header {
       border: 1px solid #303030!important
-  }
-  
-  .dark-theme .time-table-wrapper .time-table .table-column .table-header>.ant-flex span {
-      color: #ffffff85
   }
 }
