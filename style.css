@@ -144,149 +144,152 @@ body {
   }
 
   /* HEMIS */
-.time-table-wrapper {
+
+
+
+  .time-table-wrapper {
     width: 100%;
     overflow: hidden;
     border-radius: 8px
-}
+  }
 
-.time-table-wrapper * {
-    box-sizing: border-box
-}
-
-.time-table-wrapper .time-table {
-    position: relative
-}
-
-.time-table-wrapper .time-table .table-column .table-header {
-    padding: 8px;
-    max-height: 50px;
-    min-height: 50px;
-    border: 1px solid #f0f0f0
-}
-
-.time-table-wrapper .time-table .table-column .table-header>.ant-flex h3 {
-    font-size: 24px;
-    line-height: 32px
-}
-
-.time-table-wrapper .time-table .table-column .table-header>.ant-flex span {
-    font-size: 12px;
-    line-height: 16px;
-    color: #00000073;
-    transform: translateY(-4px)
-}
-
-.time-table-wrapper .time-table .table-column .table-cell {
-    background-color: #fff;
-    font-size: 13px
-}
-
-.time-table-wrapper .time-table .table-column .table-body {
-    position: relative
-}
-
-.time-table-wrapper .time-table .time-column .table-header {
-    text-align: right
-}
-
-.time-table-wrapper .time-table .time-column .table-body {
-    border-right: 1px solid #f0f0f0
-}
-
-.time-table-wrapper .time-table .time-column .table-body .current-time {
-    -webkit-backdrop-filter: blur(1px);
-    backdrop-filter: blur(1px);
-    background-color: #d9f7beaa;
-    padding: 2px 4px;
-    border-radius: 34px;
-    color: #237804;
-    font-size: 13px
-}
-
-.time-table-wrapper .time-table .time-column .table-body .table-cell {
-    padding: 0 8px 0 6px
-}
-
-.time-table-wrapper .time-table .day-column--wrapper {
-    flex: 1;
-    overflow-x: auto
-}
-
-.time-table-wrapper .time-table .day-column--wrapper .day-column {
-    flex: 1;
-    min-width: 150px
-}
-
-.time-table-wrapper .time-table .day-column--wrapper .day-column.today .table-header h3,.time-table-wrapper .time-table .day-column--wrapper .day-column.today .table-header span {
-    color: #389e0d!important
-}
-
-.time-table-wrapper .time-table .day-column--wrapper .day-column.day-option {
-    flex: 1
-}
-
-.time-table-wrapper .time-table .day-column--wrapper .day-column.day-option .table-header {
-    justify-content: left
-}
-
-.time-table-wrapper .time-table .day-column--wrapper .day-column .table-header {
-    display: flex;
-    align-items: center;
-    justify-content: center
-}
-
-.time-table-wrapper .time-table .day-column--wrapper .day-column .table-body {
-    overflow-y: hidden
-}
-
-.time-table-wrapper .time-table .day-column--wrapper .day-column .table-body .current-indicator:after {
-    content: "";
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background-color: #237804;
-    position: absolute;
-    left: 0;
-    top: -2px
-}
-
-.time-table-wrapper .time-table .day-column--wrapper .day-column .table-body .schedule-card .ant-card-body {
-    padding: 4px!important
-}
-
-.time-table-wrapper .time-table .day-column--wrapper .day-column .table-body .table-cell {
-    border: 1px solid #f0f0f0;
-    position: relative
-}
-
-.time-table-wrapper .time-table .day-column--wrapper .day-column .table-body .table-cell:after {
-    content: "";
-    position: absolute;
-    width: 100%;
-    border-bottom: 1px dashed #f0f0f0;
-    top: 50%;
-    z-index: 0
-}
-
-.dark-theme .table-body {
-    border-right: 1px solid #303030!important
-}
-
-.dark-theme .table-cell {
-    background-color: #141414!important;
-    border: 1px solid #303030!important
-}
-
-.dark-theme .table-cell:after {
-    border-bottom: 1px dashed #303030!important
-}
-
-.dark-theme .table-header {
-    border: 1px solid #303030!important
-}
-
-.dark-theme .time-table-wrapper .time-table .table-column .table-header>.ant-flex span {
-    color: #ffffff85
-}
+  .time-table-wrapper * {
+      box-sizing: border-box
+  }
+  
+  .time-table-wrapper .time-table {
+      position: relative
+  }
+  
+  .time-table-wrapper .time-table .table-column .table-header {
+      padding: 8px;
+      max-height: 50px;
+      min-height: 50px;
+      border: 1px solid #f0f0f0
+  }
+  
+  .time-table-wrapper .time-table .table-column .table-header>.ant-flex h3 {
+      font-size: 24px;
+      line-height: 32px
+  }
+  
+  .time-table-wrapper .time-table .table-column .table-header>.ant-flex span {
+      font-size: 12px;
+      line-height: 16px;
+      color: #00000073;
+      transform: translateY(-4px)
+  }
+  
+  .time-table-wrapper .time-table .table-column .table-cell {
+      background-color: #fff;
+      font-size: 13px
+  }
+  
+  .time-table-wrapper .time-table .table-column .table-body {
+      position: relative
+  }
+  
+  .time-table-wrapper .time-table .time-column .table-header {
+      text-align: right
+  }
+  
+  .time-table-wrapper .time-table .time-column .table-body {
+      border-right: 1px solid #f0f0f0
+  }
+  
+  .time-table-wrapper .time-table .time-column .table-body .current-time {
+      -webkit-backdrop-filter: blur(1px);
+      backdrop-filter: blur(1px);
+      background-color: #d9f7beaa;
+      padding: 2px 4px;
+      border-radius: 34px;
+      color: #237804;
+      font-size: 13px
+  }
+  
+  .time-table-wrapper .time-table .time-column .table-body .table-cell {
+      padding: 0 8px 0 6px
+  }
+  
+  .time-table-wrapper .time-table .day-column--wrapper {
+      flex: 1;
+      overflow-x: auto
+  }
+  
+  .time-table-wrapper .time-table .day-column--wrapper .day-column {
+      flex: 1;
+      min-width: 150px
+  }
+  
+  .time-table-wrapper .time-table .day-column--wrapper .day-column.today .table-header h3,.time-table-wrapper .time-table .day-column--wrapper .day-column.today .table-header span {
+      color: #389e0d!important
+  }
+  
+  .time-table-wrapper .time-table .day-column--wrapper .day-column.day-option {
+      flex: 1
+  }
+  
+  .time-table-wrapper .time-table .day-column--wrapper .day-column.day-option .table-header {
+      justify-content: left
+  }
+  
+  .time-table-wrapper .time-table .day-column--wrapper .day-column .table-header {
+      display: flex;
+      align-items: center;
+      justify-content: center
+  }
+  
+  .time-table-wrapper .time-table .day-column--wrapper .day-column .table-body {
+      overflow-y: hidden
+  }
+  
+  .time-table-wrapper .time-table .day-column--wrapper .day-column .table-body .current-indicator:after {
+      content: "";
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background-color: #237804;
+      position: absolute;
+      left: 0;
+      top: -2px
+  }
+  
+  .time-table-wrapper .time-table .day-column--wrapper .day-column .table-body .schedule-card .ant-card-body {
+      padding: 4px!important
+  }
+  
+  .time-table-wrapper .time-table .day-column--wrapper .day-column .table-body .table-cell {
+      border: 1px solid #f0f0f0;
+      position: relative
+  }
+  
+  .time-table-wrapper .time-table .day-column--wrapper .day-column .table-body .table-cell:after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      border-bottom: 1px dashed #f0f0f0;
+      top: 50%;
+      z-index: 0
+  }
+  
+  .dark-theme .table-body {
+      border-right: 1px solid #303030!important
+  }
+  
+  .dark-theme .table-cell {
+      background-color: #141414!important;
+      border: 1px solid #303030!important
+  }
+  
+  .dark-theme .table-cell:after {
+      border-bottom: 1px dashed #303030!important
+  }
+  
+  .dark-theme .table-header {
+      border: 1px solid #303030!important
+  }
+  
+  .dark-theme .time-table-wrapper .time-table .table-column .table-header>.ant-flex span {
+      color: #ffffff85
+  }
 }
