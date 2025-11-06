@@ -93,29 +93,39 @@ body {
 
 .schedule {
   width: 100%;
+  table-layout: fixed;
   border-collapse: collapse;
   font-family: Arial, sans-serif;
 }
 
-.schedule th,
-.schedule td {
-  border: 1px solid #ddd;
+.schedule th:first-child,
+.schedule td:first-child {
+  width: 120px;
+  white-space: nowrap;
   text-align: center;
-  width: 16.66%;
-  padding: 0;
+  font-weight: bold;
 }
 
-.schedule tbody tr {
-  height: 130px; 
+.schedule th:not(:first-child),
+.schedule td:not(:first-child) {
+  width: calc((100% - 120px) / 5);
 }
 
 .schedule thead th {
-  background-color: #f0f0f0;
+  background: #f0f0f0;
   padding: 10px;
+  border: 1px solid #ccc;
+  text-align: center;
 }
-.schedule tbody td {
+
+.schedule tbody tr {
   height: 150px;
+}
+
+.schedule tbody td {
+  border: 1px solid #ddd;
   padding: 0;
+  vertical-align: top;
 }
 
 .lesson {
@@ -125,13 +135,19 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #ffffff;
+
+  background: #fff;
   border: 1px solid #ddd;
   border-radius: 6px;
-  padding: 6px;
+  padding: 8px;
   box-sizing: border-box;
+  text-align: center;
 }
 
+.schedule tbody strong {
+  margin-bottom: 6px;
+  color: #000;
+}
 
 .schedule tbody tr:nth-child(even) {
   background-color: #fafafa;
@@ -140,7 +156,6 @@ body {
 .schedule tbody tr:hover {
   background-color: #f0f8ff;
 }
-
 
 .section h2 {
   font-size: 28px;
