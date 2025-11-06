@@ -95,16 +95,27 @@ body {
   width: 100%;
   border-collapse: collapse;
   font-family: Arial, sans-serif;
-  margin-top: 20px;
+}
+
+.schedule th,
+.schedule td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  vertical-align: top;
+  text-align: left;
 }
 
 .schedule thead th {
-  background-color: #f5f5f5;
-  color: #333;
-  font-weight: bold;
-  padding: 12px;
-  border: 1px solid #ddd;
+  background-color: #f0f0f0;
   text-align: center;
+}
+
+.lesson {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 6px;
+  margin-bottom: 6px;
+  border-radius: 4px;
 }
 
 .schedule tbody td {
