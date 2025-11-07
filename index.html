@@ -1,244 +1,90 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ИТК-23-51 | ТИФТ</title>
-  <link rel="stylesheet" href="style.css" />
+/* Анимированный фон */
+.animated-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
+  background-size: 400% 400%;
+  animation: gradientFlow 20s ease infinite;
+  z-index: -1;
+}
 
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Группа ИТК-23-51 | ТИФТ">
-  <meta property="og:description" content="Добро пожаловать! Расписание, состав группы и контакты.">
-  <meta property="og:image" content="https://nasriddinovs.uz/prev.jpg">
-  <meta property="og:url" content="https://nasriddinovs.uz/">
-  
-  <script defer src="script.js"></script>
-</head>
-<body>
-  <header class="header">
-    <div class="logo">ТИФТ ИТК-23-51</div>
-    <nav class="nav">
-      <a href="#about">О группе</a>
-      <a href="#schedule">Расписание</a>
-      <a href="#members">Состав</a>
-      <a href="#contact">Контакты</a>
-    </nav>
-    <button class="menu-btn" id="menu-btn">☰</button>
-  </header>
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
-  <section class="hero">
-    <h1>Добро пожаловать в группу ИТК-23-51!</h1>
-    <p>Факультет информационных технологий ТИФТ</p>
-  </section>
+/* Мобильная адаптация */
+body {
+  margin: 0;
+  font-family: sans-serif;
+  line-height: 1.6;
+}
 
-  <section id="about" class="section">
-    <h2>О группе</h2>
-    <p>
-      Мы — студенты группы <strong>ИТК-23-51</strong> ТИФТ, обучающиеся по направлению
-      «Информационные технологии и кибербезопасность». Наша цель — развивать навыки программирования,
-      сетевых технологий и ИБ.
-    </p>
-  </section>
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  flex-wrap: wrap;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+}
 
-  <!-- <section id="schedule" class="section">
-    <h2>Расписание</h2>
-    <table class="schedule">
-      <tr><th>День</th><th>Аудитория</td><td>Время</td><td>Предмет</th><th>Преподаватель</th></tr>
-      <tr><td>Понедельник</td><td>2/03</td><td>9:00-10:20</td><td>Создание мобильных приложений</td><td>Насриддинов.Б.</td></tr>
-      <tr><td>Вторник</td><td>2/101</td><td>12:00-13:50</td><td>Веб технология</td><td>Мусаджонова.Д.</td></tr>
-      <tr><td>Среда</td><td>2/308</td><td>12:00-13:50</td><td>Веб технология</td><td>Мусаджонова.Д.</td></tr>
-      <tr><td>Четверг</td><td>2/101</td><td>9:00-10:20</td><td>Числовые методы</td><td>Кулдашева.Н.</td></tr>
-      <tr><td>Пятница</td><td>2/07</td><td>12:00-13:50</td><td>Java технологии</td><td>Насриддинов.Б.</td></tr>
-    </table>
-  </section> -->
+.nav {
+  display: flex;
+  gap: 1rem;
+}
 
-  <button id="themeToggle" class="theme-btn">🌙</button>
+.menu-btn {
+  display: none;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  color: white;
+}
 
-  <section id="schedule" class="section">
-  <h2>Расписание</h2>
-  <table class="schedule">
-    <thead>
-      <tr>
-        <th>Время</th>
-        <th>Понедельник</th>
-        <th>Вторник</th>
-        <th>Среда</th>
-        <th>Четверг</th>
-        <th>Пятница</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>9:00–10:20</td>
-        <td>
-          <div class="lesson">
-            <strong>Создание мобильных приложений</strong><br>
-            Ауд. 2/03<br>
-            Насриддинов Б.
-          </div>
-        </td>
-        <td>
-          <div class="lesson">
-            <strong>Дискретная Математика</strong><br>
-            Ауд. 2/302<br>
-            Акрамов Н.
-          </div>
-        </td>
-        <td>
-          <div class="lesson">
-            <strong>Системное Программирование</strong><br>
-            Ауд. 2/05<br>
-            Мусаджонова Д.
-          </div>
-        </td>
-        <td>
-          <div class="lesson">
-            <strong>Java-технологии</strong><br>
-            Ауд. 2/101<br>
-            Насриддинов Б.
-          </div>
-        </td>
-        <td>
-           <div class="lesson">
-            <strong>Числовые методы</strong><br>
-            Ауд. 2/101<br>
-            Кулдашева Н.
-           </div>
-        </td>
-      </tr>
-      <tr>
-        <td>10:30–11:50</td>
-        <td>
-          <div class="lesson">
-            <strong>Веб технология</strong><br>
-              Ауд. 2/03<br>
-              Мусаджонова Д.
-          </div>
-        </td>
-        <td>
-          <div class="lesson">
-            <strong>Дискретная Математика</strong><br>
-            Ауд. 2/302<br>
-            Акрамов Н.
-          </div>
-        </td>
-        <td>
-          <div class="lesson">
-            <strong>Веб технология</strong><br>
-            Ауд. 2/308<br>
-            Мусаджонова Д.
-          </div>
-        </td>
-        <td>
-          <div class="lesson">
-            <strong>Веб технология</strong><br>
-            Ауд. 2/101<br>
-            Мусаджонова Д.
-          </div>
-        </td>
-        <td>
-          <div class="lesson">
-            <strong>Системное Программирование</strong><br>
-            Ауд. 2/05<br>
-            Мусаджонова Д.
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td>12:00–13:20</td>
-        <td>
-          <div class="lesson">
-             <strong>Числовые методы</strong><br>
-             Ауд. 2/101<br>
-             Кулдашева Н.
-           </div>
-        </td>
-        <td>
-          <div class="lesson">
-            <strong>Создание мобильных приложений</strong><br>
-            Ауд. 2/101<br>
-            Насриддинов Б.
-          </div>
-        </td>
-        <td></td>
-        <td>
-          <div class="lesson">
-            <strong>Системное Программирование</strong><br>
-            Ауд. 2/07<br>
-            Мусаджонова Д.
-          </div>
-        </td>
-        <td>
-          <div class="lesson">
-            <strong>Java-технологии</strong><br>
-            Ауд. 2/07<br>
-            Насриддинов Б.
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</section>
+@media (max-width: 768px) {
+  .nav {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+  }
 
-  <section id="members" class="section">
-    <h2>Состав группы</h2>
-    <div class="grid">
-      <div class="card">
-        <img src="images/ProfilePhoto/Otamurod.jpg" />
-        <h3>Рахимов Отамурод</h3>
-        <p> <a href="https://t.me/rakhimovvvvvvvv" target="_blank">@rakhimov</a></p>
-      </div>
-      <div class="card">
-        <img src="images/ProfilePhoto/Merlin.jpg" alt="Starosta" />
-        <h3>Хакимжонов Исломжон</h3>
-        <p> <a href="https://t.me/DanteVangob" target="_blank">@DanteVangob</a></p>
-      </div>
-      <div class="card">
-        <img src="samira.jpg" alt="Студент" />
-        <h3>Мусабоева Самира</h3>
-        <p> <a href="https://t.me/musabo_eva" target="_blank">@musabo_eva</a></p>
-      </div>
-       <div class="card">
-        <img src="images/ProfilePhoto/aziza.jpg" alt="Студентка" />
-        <h3>Фанилова Азиза</h3>
-        <p> <a href="https://t.me/moti_amethyst" target="_blank">@moti_amethyst</a></p>
-      </div>
-      <div class="card">
-        <img src="images/ProfilePhoto/Ilhom.jpg" alt="" />
-        <h3>Абдухакимов Илхом</h3>
-        <p> <a href="https://t.me/DanteVangob" target="_blank">@immex_o6</a></p>
-      </div>
-      <div class="card">
-        <img src="images/ProfilePhoto/danya.jpg" alt="Student" />
-        <h3>Войтов Данила</h3>
-        <p> <a href="https://t.me/@DanielCrowley3" target="_blank">@DanielCrowley3</a></p>
-      </div>
-    </div>
-  </section>
+  .nav.active {
+    display: flex;
+  }
 
-  <section id="contact" class="section">
-    <h2>Контакты</h2>
-    <p>Электронная почта: <a href="mailto:itk2351@tift.edu">itk2351@tift.edu</a></p>
-    <p>Telegram: <a href="https://t.me/itk2351" target="_blank">@itk2351</a></p>
-  </section>
+  .menu-btn {
+    display: block;
+  }
 
-  <footer class="footer">
-    <p>© 2025 ИТК-23-51 ТИФТ. Все права защищены.</p>
-  </footer>
-  <script>
-    const themeToggle = document.getElementById("themeToggle");
+  .grid {
+    grid-template-columns: 1fr;
+  }
 
-    themeToggle.addEventListener("click", () => {
-      document.body.classList.toggle("dark-theme");
-      themeToggle.textContent = document.body.classList.contains("dark-theme") ? "☀️" : "🌙";
-      localStorage.setItem("theme", document.body.classList.contains("dark-theme") ? "dark" : "light");
-    });
+  .schedule {
+    font-size: 0.9rem;
+    overflow-x: auto;
+  }
+}
 
-    if (localStorage.getItem("theme") === "dark") {
-      document.body.classList.add("dark-theme");
-      themeToggle.textContent = "☀️";
-    }
-  </script>
+/* Карточки участников */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  padding: 1rem 0;
+}
 
-</body>
-</html>
+.card {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 1rem;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
