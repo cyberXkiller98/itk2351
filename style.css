@@ -561,9 +561,9 @@ z-index: 1000;
   }
 
   .parallax {
-  background-image: url('images/parallax-bg.jpg'); /* Поставь сюда свою картинку */
-  min-height: 400px; /* Высота блока */
-  background-attachment: fixed; /* Фон движется медленнее текста */
+  background-image: url('https://www.freepik.com/free-vector/cosmic-background-alien-planet-deserted-landscape_29314806.htm#fromView=keyword&page=1&position=1&uuid=db63368a-9138-4cbb-a456-e546e335205f&query=Parallax+background'); 
+  min-height: 400px; 
+  background-attachment: fixed; 
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
