@@ -1,90 +1,220 @@
-/* Анимированный фон */
-.animated-background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
-  background-size: 400% 400%;
-  animation: gradientFlow 20s ease infinite;
-  z-index: -1;
-}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ИТК-23-51 | ТИФТ</title>
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      line-height: 1.6;
+      color: #fff;
+      background-color: #0f2027;
+    }
 
-@keyframes gradientFlow {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
+    #vanta-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
 
-/* Мобильная адаптация */
-body {
-  margin: 0;
-  font-family: sans-serif;
-  line-height: 1.6;
-}
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      background-color: rgba(0, 0, 0, 0.7);
+      flex-wrap: wrap;
+    }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  flex-wrap: wrap;
-  background-color: rgba(0, 0, 0, 0.7);
-  color: white;
-}
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
 
-.nav {
-  display: flex;
-  gap: 1rem;
-}
+    .nav {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
 
-.menu-btn {
-  display: none;
-  font-size: 1.5rem;
-  background: none;
-  border: none;
-  color: white;
-}
+    .nav a {
+      color: #00ffff;
+      text-decoration: none;
+      padding: 0.5rem;
+      transition: background 0.3s;
+    }
 
-@media (max-width: 768px) {
-  .nav {
-    display: none;
-    flex-direction: column;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-  }
+    .nav a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 5px;
+    }
 
-  .nav.active {
-    display: flex;
-  }
+    .menu-btn {
+      display: none;
+      font-size: 1.5rem;
+      background: none;
+      border: none;
+      color: white;
+    }
 
-  .menu-btn {
-    display: block;
-  }
+    .section {
+      padding: 2rem;
+      background: rgba(255,255,255,0.1);
+      margin: 1rem;
+      border-radius: 10px;
+      backdrop-filter: blur(10px);
+    }
 
-  .grid {
-    grid-template-columns: 1fr;
-  }
+    .section h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid #00ffff;
+      padding-bottom: 0.5rem;
+    }
 
-  .schedule {
-    font-size: 0.9rem;
-    overflow-x: auto;
-  }
-}
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
 
-/* Карточки участников */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1rem;
-  padding: 1rem 0;
-}
+    .card {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 15px;
+      text-align: center;
+      padding: 1rem;
+      color: white;
+    }
 
-.card {
-  background: rgba(255, 255, 255, 0.9);
-  padding: 1rem;
-  border-radius: 10px;
-  text-align: center;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
+    .card img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    @media (max-width: 768px) {
+      .nav {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .nav.active {
+        display: flex;
+      }
+
+      .menu-btn {
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="vanta-bg"></div>
+
+  <header class="header">
+    <div class="logo">ТИФТ ИТК-23-51</div>
+    <nav class="nav" id="nav">
+      <a href="#about">О группе</a>
+      <a href="#research">Исследования</a>
+      <a href="#publications">Публикации</a>
+      <a href="#members">Состав</a>
+      <a href="#resources">Ресурсы</a>
+      <a href="#events">События</a>
+      <a href="#contact">Контакты</a>
+    </nav>
+    <button class="menu-btn" id="menu-btn">☰</button>
+  </header>
+
+  <section class="hero section" data-aos="fade-up">
+    <h1>Добро пожаловать в группу ИТК-23-51!</h1>
+    <p>Факультет информационных технологий ТИФТ</p>
+  </section>
+
+  <section id="about" class="section" data-aos="fade-up">
+    <h2>О группе</h2>
+    <p>Мы — студенты группы ИТК-23-51, обучающиеся по направлению «Информационные технологии и кибербезопасность». Наша цель — развивать навыки программирования, сетевых технологий и ИБ.</p>
+  </section>
+
+  <section id="research" class="section" data-aos="fade-up">
+    <h2>Исследования</h2>
+    <p>Проекты в области мобильной разработки, веб-технологий, защиты данных и машинного обучения.</p>
+  </section>
+
+  <section id="publications" class="section" data-aos="fade-up">
+    <h2>Публикации</h2>
+    <ul>
+      <li><strong>2025:</strong> «Анализ угроз в мобильных приложениях» — Насриддинов Б.</li>
+      <li><strong>2024:</strong> «Оптимизация веб-интерфейсов» — Мусаджонова Д.</li>
+    </ul>
+  </section>
+
+  <section id="members" class="section" data-aos="fade-up">
+    <h2>Состав группы</h2>
+    <div class="grid">
+      <div class="card"><img src="images/ProfilePhoto/Otamurod.jpg" /><h3>Рахимов Отамурод</h3></div>
+      <div class="card"><img src="images/ProfilePhoto/Merlin.jpg" /><h3>Хакимжонов Исломжон</h3></div>
+      <div class="card"><img src="samira.jpg" /><h3>Мусабоева Самира</h3></div>
+      <div class="card"><img src="images/ProfilePhoto/aziza.jpg" /><h3>Фанилова Азиза</h3></div>
+      <div class="card"><img src="images/ProfilePhoto/Ilhom.jpg" /><h3>Абдухакимов Илхом</h3></div>
+      <div class="card"><img src="images/ProfilePhoto/danya.jpg" /><h3>Войтов Данила</h3></div>
+    </div>
+  </section>
+
+  <section id="resources" class="section" data-aos="fade-up">
+    <h2>Ресурсы</h2>
+    <ul>
+      <li><a href="#">GitHub репозиторий группы</a></li>
+      <li><a href="#">Методички по Java и Web</a></li>
+      <li><a href="#">Ссылки на онлайн-курсы</a></li>
+    </ul>
+  </section>
+
+  <section id="events" class="section" data-aos="fade-up">
+    <h2>События</h2>
+    <ul>
+      <li><strong>15 ноября:</strong> Хакатон по мобильной разработке</li>
+      <li><strong>22 ноября:</strong> Семинар по кибербезопасности</li>
+    </ul>
+  </section>
+
+  <section id="contact" class="section" data-aos="fade-up">
+    <h2>Контакты</h2>
+    <p>Email: <a href="mailto:itk2351@tift.edu">itk2351@tift.edu</a></p>
+    <p>Telegram: <a href="https://t.me/itk2351" target="_blank">@itk2351</a></p>
+  </section>
+
+  <footer class="footer">
+    <p>© 2025 ИТК-23-51 ТИФТ. Все права защищены.</p>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    VANTA.WAVES({
+      el: "#vanta-bg",
+      mouseControls: true,
+      touchControls: true,
+      minHeight: 200.00,
+      minWidth: 200.00,
+      scale: 1.0,
+      scaleMobile: 1.0,
+      color: 0x1a1a1a,
+      shininess: 50.0,
+      waveHeight: 20.0,
+      waveSpeed: 1.0,
+      zoom
