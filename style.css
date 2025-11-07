@@ -319,7 +319,7 @@ z-index: 1000;
 }
 
 /* Адаптивность */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   :root {
     --bg: #1d1f23;
     --text: #e6e6e6;
@@ -348,5 +348,215 @@ z-index: 1000;
 
   .menu-btn {
     display: block;
+  }
+} */
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+  /* Автоматическая темная тема на мобильных */
+  :root {
+    --bg: #1d1f23;
+    --text: #e6e6e6;
+    --primary: #0074d9;
+    --accent: #00a2ff;
+    --header-bg: #00224e;
+    --hero-bg: linear-gradient(135deg, #00315c, #004a75);
+    --footer-bg: #121519;
+    --card-shadow: 0 2px 6px rgba(255, 255, 255, 0.1);
+    --table-border: #444;
+    --cell-bg: #2a2c31;
+  }
+
+  /* Шапка */
+  .header {
+    padding: 10px 15px;
+    flex-wrap: wrap;
+  }
+
+  .logo {
+    font-size: 1.1em;
+  }
+
+  .nav {
+    display: none;
+    flex-direction: column;
+    background: var(--primary);
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 200px;
+    text-align: right;
+    padding: 15px;
+    border-radius: 0 0 0 10px;
+    box-shadow: -2px 2px 10px rgba(0,0,0,0.3);
+  }
+
+  .nav.active {
+    display: flex;
+  }
+
+  .nav a {
+    padding: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .menu-btn {
+    display: block;
+  }
+
+  /* Герой */
+  .hero {
+    padding: 50px 15px;
+  }
+
+  .hero h1 {
+    font-size: 1.8em;
+  }
+
+  .hero p {
+    font-size: 1em;
+  }
+
+  /* Секции */
+  .section {
+    padding: 30px 15px;
+  }
+
+  .section h2 {
+    font-size: 22px;
+  }
+
+  /* Таблица расписания */
+  .schedule-wrapper {
+    margin: 0 -15px;
+    padding: 0 15px;
+  }
+
+  .schedule {
+    width: 100%;
+    min-width: 100%;
+    font-size: 12px;
+  }
+
+  .schedule th:first-child,
+  .schedule td:first-child {
+    width: 60px;
+    font-size: 11px;
+    padding: 5px 2px;
+  }
+
+  .schedule thead th {
+    padding: 8px 4px;
+    font-size: 11px;
+  }
+
+  .schedule tbody tr {
+    height: 120px;
+  }
+
+  .schedule tbody td {
+    padding: 2px;
+  }
+
+  .lesson {
+    padding: 5px;
+    font-size: 11px;
+    border-radius: 4px;
+  }
+
+  .lesson strong {
+    font-size: 12px;
+    margin-bottom: 3px;
+  }
+
+  /* Таблица для темной темы */
+  .schedule tbody tr:nth-child(even) {
+    background-color: #24262b;
+  }
+
+  .schedule tbody tr:hover {
+    background-color: #333842;
+  }
+
+  .lesson {
+    background: var(--cell-bg);
+    border-color: var(--table-border);
+  }
+
+  .schedule thead th {
+    background: #2e3136;
+    border-color: var(--table-border);
+  }
+
+  /* Сетка карточек */
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+  }
+
+  .card {
+    padding: 12px;
+  }
+
+  .card img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .card h3 {
+    font-size: 1em;
+  }
+
+  .card p {
+    font-size: 0.9em;
+  }
+
+  /* Кнопки */
+  .button {
+    width: 100%;
+    max-width: 100%;
+    font-size: 0.95em;
+    padding: 12px 18px;
+  }
+
+  .theme-btn {
+    bottom: 15px;
+    right: 15px;
+    padding: 8px 10px;
+    font-size: 18px;
+  }
+
+  /* Футер */
+  .footer {
+    padding: 15px 10px;
+    font-size: 0.9em;
+  }
+}
+
+/* Для очень маленьких экранов */
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 1.5em;
+  }
+
+  .schedule {
+    font-size: 10px;
+  }
+
+  .schedule th:first-child,
+  .schedule td:first-child {
+    width: 50px;
+    font-size: 10px;
+  }
+
+  .lesson {
+    font-size: 10px;
+  }
+
+  .lesson strong {
+    font-size: 11px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
   }
 }
