@@ -559,4 +559,22 @@ z-index: 1000;
   .grid {
     grid-template-columns: 1fr;
   }
+
+  .parallax {
+  background-image: url('images/parallax-bg.jpg'); /* Поставь сюда свою картинку */
+  min-height: 400px; /* Высота блока */
+  background-attachment: fixed; /* Фон движется медленнее текста */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+  font-size: 2em;
+  text-shadow: 2px 2px 4px #000;
+  padding: 50px 20px;
+}
+
 }
