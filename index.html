@@ -13,7 +13,6 @@
       color: #fff;
       background-color: #0f2027;
     }
-
     #vanta-bg {
       position: fixed;
       top: 0;
@@ -22,7 +21,6 @@
       height: 100%;
       z-index: -1;
     }
-
     .header {
       display: flex;
       justify-content: space-between;
@@ -31,30 +29,25 @@
       background-color: rgba(0, 0, 0, 0.7);
       flex-wrap: wrap;
     }
-
     .logo {
       font-size: 1.5rem;
       font-weight: bold;
     }
-
     .nav {
       display: flex;
       gap: 1rem;
       flex-wrap: wrap;
     }
-
     .nav a {
       color: #00ffff;
       text-decoration: none;
       padding: 0.5rem;
       transition: background 0.3s;
     }
-
     .nav a:hover {
       background-color: rgba(255, 255, 255, 0.2);
       border-radius: 5px;
     }
-
     .menu-btn {
       display: none;
       font-size: 1.5rem;
@@ -62,7 +55,6 @@
       border: none;
       color: white;
     }
-
     .section {
       padding: 2rem;
       background: rgba(255,255,255,0.1);
@@ -70,20 +62,17 @@
       border-radius: 10px;
       backdrop-filter: blur(10px);
     }
-
     .section h2 {
       font-size: 1.8rem;
       margin-bottom: 1rem;
       border-bottom: 2px solid #00ffff;
       padding-bottom: 0.5rem;
     }
-
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 1rem;
     }
-
     .card {
       background: rgba(255, 255, 255, 0.2);
       backdrop-filter: blur(10px);
@@ -93,47 +82,37 @@
       padding: 1rem;
       color: white;
     }
-
     .card img {
       width: 100%;
       border-radius: 10px;
     }
-
     .footer {
       text-align: center;
       padding: 1rem;
       background-color: rgba(0, 0, 0, 0.7);
     }
-
     @media (max-width: 768px) {
       .nav {
         display: none;
         flex-direction: column;
         width: 100%;
       }
-
       .nav.active {
         display: flex;
       }
-
       .menu-btn {
         display: block;
       }
     }
   </style>
-  <link rel="stylesheet" href="style.css" />
-
-  <meta property="og:type" content="websiтe">
+  <meta property="og:type" content="website">
   <meta property="og:title" content="Группа ИТК-23-51 | ТИФТ">
   <meta property="og:description" content="Добро пожаловать! Расписание, состав группы и контакты.">
   <meta property="og:image" content="https://nasriddinovs.uz/prev.jpg">
   <meta property="og:url" content="https://nasriddinovs.uz/">
-  
-  <script defer src="script.js"></script>
 </head>
 <body>
   <div id="vanta-bg"></div>
-
   <header class="header">
     <div class="logo">ТИФТ ИТК-23-51</div>
     <nav class="nav" id="nav">
@@ -216,19 +195,3 @@
   <script>
     VANTA.WAVES({
       el: "#vanta-bg",
-      mouseControls: true,
-      touchControls: true,
-      minHeight: 200.00,
-      minWidth: 200.00,
-      scale: 1.0,
-      scaleMobile: 1.0,
-      color: 0x1a1a1a,
-      shininess: 50.0,
-      waveHeight: 20.0,
-      waveSpeed: 1.0,
-      zoom: 0.85
-    });
-
-    AOS.init();
-
-    const menuBtn = document.getElement
