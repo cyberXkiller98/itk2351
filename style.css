@@ -88,9 +88,15 @@ body {
 .schedule {
   width: 110%;
   max-width: 1000px;
+  min-width: 600px;
   margin: 0 auto;
   table-layout: fixed;
   border-collapse: collapse;
+}
+
+.schedule-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .schedule th:first-child,
@@ -262,8 +268,68 @@ z-index: 1000;
   transform: scale(1.1);
 }
 
+.mobile-nav-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--header-bg);
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.mobile-nav-overlay.active {
+  display: flex;
+}
+
+.mobile-nav-overlay a {
+  color: var(--text);
+  font-size: 1.5em;
+  margin: 15px 0;
+  text-decoration: none;
+}
+
+.container {
+  padding: 20px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.button {
+  display: inline-block;
+  background: var(--accent);
+  color: white;
+  padding: 14px 20px;
+  font-size: 1em;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  width: 100%;
+  max-width: 300px;
+  margin: 10px auto;
+}
+
+.button:hover {
+  background: #006fd6;
+}
+
 /* Адаптивность */
 @media (max-width: 768px) {
+  :root {
+    --bg: #1d1f23;
+    --text: #e6e6e6;
+    --primary: #0074d9;
+    --accent: #00a2ff;
+    --header-bg: #00224e;
+    --hero-bg: linear-gradient(135deg, #00315c, #004a75);
+    --footer-bg: #121519;
+    --card-shadow: 0 2px 6px rgba(255, 255, 255, 0.1);
+  }
   .nav {
     display: none;
     flex-direction: column;
