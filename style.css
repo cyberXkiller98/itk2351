@@ -30,7 +30,6 @@ body {
   
   /* Высота блока */
   height: 50vh;
-
   /* Основное: фиксируем фон */
   background-attachment: fixed;
   background-position: center;
