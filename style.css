@@ -157,7 +157,7 @@ body {
 
 .about_section{
   padding: 40px 20px;
-  max-width: 1200px;
+  max-width: 1000px;
   margin: auto;
 
   background-color: var(--about-bg);
@@ -449,16 +449,19 @@ z-index: 1000;
 @media (max-width: 768px) {
   /* Автоматическая темная тема на мобильных */
   :root {
-    --bg: #1d1f23;
-    --text: #e6e6e6;
-    --primary: #0074d9;
-    --accent: #00a2ff;
-    --header-bg: #00224e;
-    --hero-bg: linear-gradient(135deg, #00315c, #004a75);
-    --footer-bg: #121519;
-    --card-shadow: 0 2px 6px rgba(255, 255, 255, 0.1);
-    --table-border: #444;
-    --cell-bg: #2a2c31;
+    --bg: #f8f9fb;
+    --primary: #005b96;
+    --text: #222;
+    --accent: #0084ff;
+
+    --cell-bg: rgba(255, 255, 255, 0.85);
+    --header-bg: var(--primary);
+    --hero-bg: linear-gradient(135deg, #007bff, #00a2ff);
+    --footer-bg: var(--primary);
+
+    --card-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    --about-bg: rgba(255, 255, 255, 0.8);
+    --about-text: #222;
   }
 
   /* Шапка */
@@ -468,7 +471,7 @@ z-index: 1000;
   }
 
   .logo {
-    font-size: 1.1em;
+    font-size: 1.0em;
   }
 
   .nav {
@@ -504,7 +507,7 @@ z-index: 1000;
   }
 
   .hero h1 {
-    font-size: 1.8em;
+    font-size: 1.6em;
   }
 
   .hero p {
