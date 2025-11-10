@@ -4,6 +4,7 @@
   --text: #222;
   --accent: #0084ff;
 
+  --cell-bg: rgba(255, 255, 255, 0.85);
   --header-bg: var(--primary);
   --hero-bg: linear-gradient(135deg, #007bff, #00a2ff);
   --footer-bg: var(--primary);
@@ -19,33 +20,11 @@
 }
 
 body {
-  background: var(--bg);
+  background: url('https://picsum.photos/1920/1080') center/cover fixed no-repeat;
   color: var(--text);
   line-height: 1.6;
-}
-
-.parallax {
-  /* Фон для параллакса */
-  background-image: url('https://picsum.photos/1920/1080?grayscale');
-  
-  /* Высота блока */
-  height: 30vh;
-  /* Основное: фиксируем фон */
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.content {
-  height: 30vh;
-  background-color: #000000;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 50px;
+  background-attachment: scroll;
+  background-position: center top;
 }
 
 /* Header */
@@ -80,7 +59,6 @@ body {
   text-decoration: underline;
 }
 
-/* Mobile menu */
 .menu-btn {
   display: none;
   font-size: 1.5em;
@@ -91,24 +69,20 @@ body {
 }
 
 .hero {
-  /* Основные стили */
-  background: var(--hero-bg) url('https://picsum.photos/1920/1080?blur') center/cover no-repeat; 
+  background: var(--hero-bg); 
   color: var(--text);
   text-align: center;
   padding: 120px 20px;
   position: relative;
   overflow: hidden;
 
-  /* Эффект плавного появления */
   opacity: 0;
   transform: translateY(30px);
   animation: heroFadeIn 1.2s ease-out forwards;
 
-  /* Немного 3D-ощущения */
   perspective: 1000px;
 }
 
-/* Полупрозрачная тень поверх фона для контраста */
 .hero::after {
   content: "";
   position: absolute;
@@ -116,11 +90,22 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.45);
+  background: rgba(0, 0, 0, 0.1);
   z-index: 0;
 }
 
-/* Контент поверх */
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 150%;
+  background: url('https://picsum.photos/1920/1080') center/cover no-repeat;
+  z-index: -1;
+  transform: translateY(-20%);  
+}
+
 .hero-content {
   position: relative;
   z-index: 1;
@@ -129,7 +114,6 @@ body {
   animation: floatIn 2s ease-in-out infinite alternate;
 }
 
-/* Заголовок */
 .hero h1 {
   font-size: 3.5rem;
   margin-bottom: 20px;
@@ -138,7 +122,6 @@ body {
   animation: glow 2s ease-in-out infinite alternate;
 }
 
-/* Подзаголовок */
 .hero p {
   font-size: 1.2rem;
   color: #ddd;
@@ -147,7 +130,6 @@ body {
   line-height: 1.6;
 }
 
-/* 🌈 Анимации */
 @keyframes heroFadeIn {
   from {
     opacity: 0;
@@ -198,6 +180,7 @@ body {
 
 .schedule th:first-child,
 .schedule td:first-child {
+  background: var(--bg);
   width: 120px;
   white-space: nowrap;
   text-align: center;
@@ -207,13 +190,14 @@ body {
 
 .schedule th:not(:first-child),
 .schedule td:not(:first-child) {
+  background: var(--bg);
   width: calc((100% - 120px) / 5);
 }
 
 .schedule thead th {
-  background: #f0f0f0;
+  background: var(--bg);
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #4b4b4b;
   text-align: center;
 }
 
@@ -235,8 +219,7 @@ body {
   justify-content: center;
   align-items: center;
 
-  /*background: #fff;*/
-  background: var(--cell-bg, #fff);
+  background: var(--cell-bg);
   color: var(--text);
   border: 1px solid var(--table-border, #ddd);
   color: var(--text);
@@ -656,22 +639,4 @@ z-index: 1000;
   .grid {
     grid-template-columns: 1fr;
   }
-
-  .parallax {
-  background-image: url('https://www.freepik.com/free-vector/cosmic-background-alien-planet-deserted-landscape_29314806.htm#fromView=keyword&page=1&position=1&uuid=db63368a-9138-4cbb-a456-e546e335205f&query=Parallax+background'); 
-  min-height: 400px; 
-  background-attachment: fixed; 
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  text-align: center;
-  font-size: 2em;
-  text-shadow: 2px 2px 4px #000;
-  padding: 50px 20px;
-}
-
 }
