@@ -189,6 +189,7 @@ body {
 .schedule-wrapper {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  width: 100%;
 }
 
 .schedule th:first-child,
@@ -525,21 +526,36 @@ z-index: 1000;
 
   /* Таблица расписания */
   .schedule-wrapper {
-    margin: 0 -15px;
-    padding: 0 15px;
+    /* margin: 0 -15px;
+    padding: 0 15px; */
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
   }
 
   .schedule {
     width: 100%;
-    min-width: 100%;
+    min-width: 0px;
+    table-layout: auto;
     font-size: 12px;
+  }
+
+  .schedule th,
+  .schedule td {
+    white-space: normal;
+    word-break: break-word;
+    padding: 4px 6px;
+    text-align: center;
   }
 
   .schedule th:first-child,
   .schedule td:first-child {
-    width: 60px;
-    font-size: 11px;
-    padding: 5px 2px;
+    width: auto;
+  }
+
+  .schedule th:not(:first-child),
+  .schedule td:not(:first-child) {
+    width: auto;
   }
 
   .schedule thead th {
@@ -552,7 +568,8 @@ z-index: 1000;
   }
 
   .schedule tbody td {
-    padding: 2px;
+    padding: 2px 4px;
+    word-break: break-word;
   }
 
   .lesson {
