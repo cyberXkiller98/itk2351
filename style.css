@@ -24,6 +24,31 @@ body {
   line-height: 1.6;
 }
 
+.parallax {
+  /* Фон для параллакса */
+  background-image: url('https://picsum.photos/1920/1080?grayscale');
+  
+  /* Высота блока */
+  height: 50vh;
+
+  /* Основное: фиксируем фон */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.content {
+  height: 100vh;
+  background-color: #000000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 50px;
+}
+
 /* Header */
 .header {
   background: var(--header-bg);
