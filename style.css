@@ -600,5 +600,32 @@ z-index: 1000;
   text-shadow: 2px 2px 4px #000;
   padding: 50px 20px;
 }
-
+#parallax-0 {
+  background-image: url(../img/layer0.png);
+  background-color: #ffaf1b;
+}
+#parallax-1 {
+  background-image: url(../img/layer1.png);
+}
+#parallax-2 {
+  background-image: url(../img/layer2.png);
+}
+#parallax-3 {
+  background-image: url(../img/layer3.png);
+}
+#parallax-4 {
+  background-image: url(../img/layer4.png);
+}
+#parallax-5 {
+  background-image: url(../img/layer5.png);
+}
+#parallax-6 {
+  background-image: url(../img/layer6.png);
+}
+#parallax-7 {
+  background-image: url(../img/layer7.png);
+}
+#parallax-8 {
+  background-image: url(../img/layer8.png);
+}
 }
