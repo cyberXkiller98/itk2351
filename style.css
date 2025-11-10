@@ -22,16 +22,15 @@
 }
 
 body {
-  background-image: url('https://picsum.photos/3840/2160'); /* Высокое качество */
+  background-image: url('https://picsum.photos/3840/2160');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  background-attachment: fixed; /* Параллакс */
+  background-attachment: fixed;
   color: var(--text);
   line-height: 1.6;
 }
 
-/* Header */
 .header {
   background: var(--header-bg);
   color: var(--text);
@@ -262,7 +261,54 @@ body {
   margin-bottom: 10px;
   color: #237804;
 }
+.carousel-wrapper {
+  position: relative;
+  margin-top: 20px;
+}
 
+.carousel {
+  display: flex;
+  overflow-x: auto;
+  gap: 15px;
+  padding: 10px 0;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.carousel::-webkit-scrollbar {
+  display: none; /* прячем скроллбар */
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+  z-index: 10;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0.8;
+}
+
+.carousel-btn:hover {
+  opacity: 1;
+}
+
+.carousel-btn.prev {
+  left: 0;
+}
+
+.carousel-btn.next {
+  right: 0;
+}
 
 .grid {
   display: grid;
@@ -272,8 +318,10 @@ body {
 }
 
 .card {
+  flex: 0 0 auto;
+  width: 180px;
+  scroll-snap-align: start;
   background: var(--bg);
-  color: var(--text);
   border-radius: 10px;
   padding: 15px;
   box-shadow: var(--card-shadow);
@@ -414,41 +462,8 @@ z-index: 1000;
   background: #006fd6;
 }
 
-/* Адаптивность */
-/* @media (max-width: 768px) {
-  :root {
-    --bg: #1d1f23;
-    --text: #e6e6e6;
-    --primary: #0074d9;
-    --accent: #00a2ff;
-    --header-bg: #00224e;
-    --hero-bg: linear-gradient(135deg, #00315c, #004a75);
-    --footer-bg: #121519;
-    --card-shadow: 0 2px 6px rgba(255, 255, 255, 0.1);
-  }
-  .nav {
-    display: none;
-    flex-direction: column;
-    background: var(--primary);
-    position: absolute;
-    top: 60px;
-    right: 0;
-    width: 180px;
-    text-align: right;
-    padding: 10px;
-  }
-
-  .nav.active {
-    display: flex;
-  }
-
-  .menu-btn {
-    display: block;
-  }
-} */
 /* Адаптивность для мобильных устройств */
 @media (max-width: 768px) {
-  /* Автоматическая темная тема на мобильных */
   :root {
     --bg: #f8f9fb;
     --primary: #005b96;
@@ -465,7 +480,6 @@ z-index: 1000;
     --about-text: #222;
   }
 
-  /* Шапка */
   .header {
     padding: 10px 15px;
     flex-wrap: wrap;
@@ -502,7 +516,6 @@ z-index: 1000;
     display: block;
   }
 
-  /* Герой */
   .hero {
     padding: 50px 15px;
   }
@@ -515,7 +528,6 @@ z-index: 1000;
     font-size: 1em;
   }
 
-  /* Секции */
   .section {
     padding: 30px 15px;
   }
@@ -524,10 +536,7 @@ z-index: 1000;
     font-size: 22px;
   }
 
-  /* Таблица расписания */
   .schedule-wrapper {
-    /* margin: 0 -15px;
-    padding: 0 15px; */
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     width: 100%;
@@ -583,7 +592,6 @@ z-index: 1000;
     margin-bottom: 3px;
   }
 
-  /* Таблица для темной темы */
   .schedule tbody tr:nth-child(even) {
     background-color: #24262b;
   }
@@ -602,7 +610,6 @@ z-index: 1000;
     border-color: var(--table-border);
   }
 
-  /* Сетка карточек */
   .grid {
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     gap: 10px;
@@ -625,7 +632,6 @@ z-index: 1000;
     font-size: 0.9em;
   }
 
-  /* Кнопки */
   .button {
     width: 100%;
     max-width: 100%;
@@ -640,14 +646,12 @@ z-index: 1000;
     font-size: 18px;
   }
 
-  /* Футер */
   .footer {
     padding: 15px 10px;
     font-size: 0.9em;
   }
 }
 
-/* Для очень маленьких экранов */
 @media (max-width: 480px) {
   .hero h1 {
     font-size: 1.5em;
