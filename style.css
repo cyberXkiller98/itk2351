@@ -18,10 +18,14 @@
   font-family: "Segoe UI", Arial, sans-serif;
 }
 
-body {
+body, html {
   background: var(--bg);
   color: var(--text);
   line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: Arial, sans-serif;
 }
 
 /* Header */
@@ -54,6 +58,31 @@ body {
 
 .nav a:hover {
   text-decoration: underline;
+}
+
+.parallax {
+  /* Фон для параллакса */
+  background-image: url('https://picsum.photos/1920/1080?grayscale');
+  
+  /* Высота блока */
+  height: 100vh;
+
+  /* Основное: фиксируем фон */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.content {
+  height: 100vh;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 50px;
 }
 
 /* Mobile menu */
