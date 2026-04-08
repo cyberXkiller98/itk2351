@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Образовательный портал</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin:0; background:#f5f7fb; }
+    header { background:#2c3e50; color:white; padding:20px; text-align:center; }
+    nav { background:#34495e; padding:10px; text-align:center; }
+    nav a { color:white; margin:0 10px; text-decoration:none; font-weight:bold; }
+    .container { max-width:1000px; margin:20px auto; background:white; padding:20px; border-radius:10px; box-shadow:0 5px 15px rgba(0,0,0,0.1); }
+    h1,h2 { color:#2c3e50; }
+    img { max-width:100%; border-radius:8px; margin:10px 0; }
+    .note { background:#eaf2ff; padding:10px; border-left:5px solid #3498db; margin:15px 0; }
+    .warning { background:#ffeaea; padding:10px; border-left:5px solid #e74c3c; margin:15px 0; }
+    footer { text-align:center; padding:20px; color:#777; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>📚 Образовательный портал</h1>
+  <p>Изучай IT шаг за шагом</p>
+</header>
+
+<nav>
+  <a href="#">Главная</a>
+  <a href="#course">Курс</a>
+  <a href="#about">О сайте</a>
+</nav>
+
+<div class="container" id="course">
+  <h1>Подготовительный этап</h1>
+
+  <h2>Установка VM VirtualBox</h2>
+  <div class="note">
+    Скачать VM VirtualBox можно с официального сайта: 
+    <a href="https://www.virtualbox.org/wiki/Downloads/" target="_blank">virtualbox.org</a>
+  </div>
+
+  <p><b>Пример установки VirtualBox в Windows:</b></p>
+  <img src="_images/0.png">
+  <p>Выберите VirtualBox и скачайте установщик.</p>
+
+  <img src="_images/1.png">
+  <p>Запустите файл и нажмите Next.</p>
+
+  <img src="_images/2.png">
+  <p>Выберите путь установки → Next.</p>
+
+  <img src="_images/3.png">
+  <p>Выберите нужные опции → Next.</p>
+
+  <img src="_images/4.png">
+  <p>Подтвердите отключение сети → Yes.</p>
+
+  <img src="_images/5.png">
+  <p>Нажмите Install.</p>
+
+  <img src="_images/7.png">
+  <p>Дождитесь завершения → Finish.</p>
+
+  <h2>Загрузка ISO Linux</h2>
+  <div class="note">
+    Скачать ISO можно:
+    <ul>
+      <li><a href="http://mirror.yandex.ru/ubuntu-releases/16.04.1/ubuntu-16.04-server-i386.iso">Ubuntu 16.04</a></li>
+      <li><a href="http://mirror.yandex.ru/centos/7.2.1511/isos/x86_64/CentOS-7-x86_64-Minimal-1511.iso">CentOS 7</a></li>
+    </ul>
+  </div>
+
+  <h2>Создание виртуальной машины</h2>
+  <img src="_images/vm1.png">
+  <p>Нажмите New.</p>
+
+  <img src="_images/vm3.png">
+  <p>Введите имя и выберите тип ОС.</p>
+
+  <img src="_images/vm4.png">
+  <p>Выделите RAM.</p>
+
+  <img src="_images/vm5.png">
+  <p>Создайте виртуальный диск.</p>
+
+  <img src="_images/vm10.png">
+  <p>Выберите размер и ISO файл → Start.</p>
+
+  <h2>Установка Ubuntu Server</h2>
+  <img src="_images/01.png">
+  <p>Выберите язык → English.</p>
+
+  <img src="_images/21.png">
+  <p>Начните установку → Enter.</p>
+
+  <img src="_images/81.png">
+  <p>Введите имя сервера.</p>
+
+  <img src="_images/9.png">
+  <p>Создайте пользователя.</p>
+
+  <img src="_images/111.png">
+  <p>Введите пароль.</p>
+
+  <div class="warning">
+    Пароль не отображается при вводе — это нормально.
+  </div>
+
+  <img src="_images/26.png">
+  <p>Завершите установку → Continue.</p>
+
+  <p><b>Готово! 🎉</b> Теперь можно переходить к лабораторным работам.</p>
+</div>
+
+<footer>
+  © 2026 Образовательный портал
+</footer>
+
+</body>
+</html>
