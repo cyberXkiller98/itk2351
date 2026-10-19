@@ -1,288 +1,375 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <script defer src="script.js"></script>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ИТК-23-51 | ТИФТ</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Практика: сайт в Docker-контейнере</title>
+<meta name="description" content="Практическое занятие: упаковка веб-сайта в Docker-образ и запуск в изолированном контейнере">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐳</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&family=Unbounded:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF2F4;--surface:#FFFFFF;--ink:#11243A;--muted:#51647A;--line:#D3DCE3;
+  --blue:#1B6EF3;--on-blue:#FFFFFF;--tint:#E3EDFE;--amber:#F5B82E;--ok:#16895A;
+  --code:#0E1B2B;--code-ink:#D7E3F1;--code-dim:#7F93AA;
+  --display:'Unbounded','Trebuchet MS',system-ui,sans-serif;
+  --body:'Onest',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0A1522;--surface:#12233A;--ink:#E6EEF7;--muted:#93A6BB;--line:#223650;
+  --blue:#6AA3FF;--on-blue:#08192E;--tint:#17304F;--ok:#4CC38A;--code:#06101B;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0A1522;--surface:#12233A;--ink:#E6EEF7;--muted:#93A6BB;--line:#223650;
+  --blue:#6AA3FF;--on-blue:#08192E;--tint:#17304F;--ok:#4CC38A;--code:#06101B;color-scheme:dark}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 76px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.65 var(--body)}
+a{color:var(--blue)}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:4px}
+code{font-family:var(--mono);font-size:.88em;background:var(--tint);padding:.1em .4em;border-radius:4px}
 
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Группа ИТК-23-51 | ТИФТ">
-  <meta property="og:description" content="Добро пожаловать! Расписание, состав группы и контакты.">
-  <meta property="og:image" content="https://nasriddinovs.uz/prev.jpg">
-  <meta property="og:url" content="https://nasriddinovs.uz/">
+/* top bar */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+.bar-in{max-width:1120px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:14px}
+.brand{font:700 14px var(--display);margin-right:auto;white-space:nowrap}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface)}
+.seg button{font:500 14px var(--body);color:var(--muted);background:none;border:0;padding:7px 12px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--blue);color:var(--on-blue)}
+.icon-btn{font-size:16px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;width:36px;height:34px;cursor:pointer}
+.prog{height:4px;background:var(--line)}
+.prog i{display:block;height:100%;width:0;background:var(--ok);transition:width .35s}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
+
+/* layout */
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px;display:grid;grid-template-columns:230px minmax(0,1fr);gap:48px}
+nav.toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 84px);align-self:start;padding:36px 0}
+nav.toc a{display:flex;justify-content:space-between;gap:10px;padding:8px 12px;border-left:3px solid var(--line);color:var(--muted);text-decoration:none;font-size:15px}
+nav.toc a small{font-family:var(--mono);font-size:12px}
+nav.toc a.on{border-color:var(--blue);color:var(--ink);background:var(--tint)}
+main{padding-bottom:80px;min-width:0}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:36px;align-items:center;padding:52px 0 40px}
+h1{font:700 clamp(28px,4.4vw,46px)/1.12 var(--display);margin:0 0 18px;letter-spacing:-.02em}
+.lede{color:var(--muted);margin:0 0 22px;max-width:52ch}
+.facts{display:flex;flex-wrap:wrap;gap:8px}
+.facts span{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:5px 14px;font-size:14px}
+.stack{display:flex;flex-direction:column;gap:6px;font:500 13px var(--mono)}
+.layer{border-radius:8px;padding:14px 16px;display:flex;justify-content:space-between;gap:12px;border:0;text-align:left;cursor:pointer;color:#fff;transform:translateY(-14px);opacity:0;animation:drop .5s cubic-bezier(.2,.8,.3,1) forwards}
+.layer:nth-child(2){animation-delay:.12s}.layer:nth-child(3){animation-delay:.24s}.layer:nth-child(4){animation-delay:.36s}
+.layer b{font-weight:500}.layer em{font-style:normal;opacity:.8}
+.l-top{background:#0B5BD3;color:#fff}.l-cmd{background:#2F8F6B}.l-cp{background:#C98A00}.l-base{background:#44566C}
+.stack-note{font:400 14px var(--body);color:var(--muted);min-height:44px;margin-top:6px}
+@keyframes drop{to{transform:none;opacity:1}}
+
+/* sections */
+section{padding:34px 0;border-top:1px solid var(--line)}
+section>header{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+h2{font:700 clamp(19px,2.6vw,25px)/1.25 var(--display);margin:0;letter-spacing:-.01em;flex:1}
+.min{font:500 13px var(--mono);color:var(--muted);white-space:nowrap}
+.check{appearance:none;width:30px;height:30px;border:2px solid var(--line);border-radius:50%;background:var(--surface);cursor:pointer;display:grid;place-items:center;flex:none;margin:0}
+.check:checked{background:var(--ok);border-color:var(--ok)}
+.check:checked::after{content:"✓";color:#fff;font-weight:700;font-size:16px}
+ol.steps{padding-left:22px}ol.steps li{margin:8px 0;padding-left:4px}
+ul{padding-left:20px}
+
+/* code */
+.codebox{position:relative;margin:14px 0}
+pre{margin:0;background:var(--code);color:var(--code-ink);border-radius:10px;padding:16px 18px;overflow-x:auto;font:400 14px/1.6 var(--mono);tab-size:2}
+.cp{position:absolute;top:8px;right:8px;font:500 12px var(--body);background:#22364F;color:#D7E3F1;border:0;border-radius:6px;padding:5px 10px;cursor:pointer}
+.cp.done{background:var(--ok);color:#fff}
+.dim{color:var(--code-dim)}
+.flags{display:grid;gap:8px;margin:12px 0;padding:0;list-style:none}
+.flags li{display:flex;gap:12px;align-items:baseline;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:9px 14px}
+.flags code{flex:none}
+
+/* dockerfile explorer */
+.dk{background:var(--code);border-radius:10px;padding:10px;margin:14px 0}
+.dk button{display:block;width:100%;text-align:left;font:400 14px/1.5 var(--mono);color:var(--code-ink);background:none;border:0;border-left:3px solid transparent;padding:8px 12px;cursor:pointer;border-radius:4px}
+.dk button[aria-pressed="true"]{background:#16304F;border-color:var(--amber)}
+.dk button .c{color:var(--code-dim)}
+.dk-note{margin:0 4px 4px;padding:12px 14px;background:var(--tint);border-radius:8px;font-size:15px}
+
+/* browser preview */
+.browser{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface);margin:16px 0}
+.browser .tb{display:flex;align-items:center;gap:8px;padding:9px 12px;border-bottom:1px solid var(--line);font:400 13px var(--mono);color:var(--muted)}
+.browser .tb i{width:10px;height:10px;border-radius:50%;background:var(--line)}
+.browser .tb span{flex:1;background:var(--bg);border-radius:6px;padding:3px 10px}
+.browser iframe{display:block;width:100%;height:230px;border:0;background:#fff}
+
+/* commands */
+.cmds{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:14px}
+.cmd{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px}
+.cmd h3{font:600 15px var(--body);margin:0 0 8px}
+.cmd .codebox{margin:0}.cmd pre{padding:12px 14px;font-size:13px}
+
+/* callouts + quiz */
+.note{background:var(--tint);border-left:4px solid var(--blue);border-radius:6px;padding:12px 16px;margin:16px 0;font-size:15.5px}
+.warn{border-left-color:var(--amber)}
+.tasks{list-style:none;padding:0;display:grid;gap:8px}
+.tasks label{display:flex;gap:12px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;cursor:pointer}
+.tasks input{margin-top:5px;accent-color:var(--ok);width:18px;height:18px;flex:none}
+.tasks input:checked+span{color:var(--muted);text-decoration:line-through}
+.done-msg{display:none;margin-top:14px;background:var(--ok);color:#fff;border-radius:10px;padding:14px 16px;font-weight:500}
+.done-msg.show{display:block}
+details{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:2px 16px;margin:8px 0}
+summary{cursor:pointer;padding:12px 0;font-weight:500}
+details p{margin:0 0 14px;color:var(--muted);font-size:15px}
+footer{padding:30px 0 10px;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
+button{font-family:inherit}
+
+@media (max-width:860px){
+  .wrap{grid-template-columns:1fr;gap:0}nav.toc{display:none}
+  .hero{grid-template-columns:1fr;padding-top:30px}
+  .brand{display:none}.bar-in{justify-content:space-between}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}.layer{opacity:1;transform:none}}
+</style>
 </head>
 <body>
-  <header class="header">
-    <div class="logo">ТИФТ ИТК-23-51</div>
-    <nav class="nav">
-      <a href="/schedule.html">Расписание Преподавателя</a>
-      <a href="#about">О группе</a>
-      <a href="#schedule">Расписание</a>
-      <a href="#members">Состав</a>
-      <a href="#contact">Контакты</a>
-    </nav>
-    <button class="menu-btn" id="menu-btn">☰</button>
-  </header>
 
-  <section class="hero">
-    <h1>Добро пожаловать в группу ИТК-23-51!</h1>
-    <p>Факультет информационных технологий ТИФТ</p>
-  </section>
-  
-  <section id="about" class="about_section">
-    <h2>О группе</h2>
-    <p>
-      Мы — студенты tift группы <strong>ИТК-23-51</strong> ТИФТ, обучающиеся по направлению
-      «Информационные технологии и кибербезопасность». Наша цель — развивать навыки программирования,
-      сетевых технологий и ИБ.
-    </p>
-  </section>
+<div class="bar">
+  <div class="bar-in">
+    <div class="brand">🐳 Docker · практика</div>
+    <div class="seg" role="group" aria-label="Операционная система">
+      <button data-os="win" aria-pressed="true">Windows</button>
+      <button data-os="mac" aria-pressed="false">macOS</button>
+    </div>
+    <button class="icon-btn" id="theme" aria-label="Переключить тему">◐</button>
+  </div>
+  <div class="prog" role="progressbar" aria-label="Прогресс выполнения" aria-valuemin="0" aria-valuemax="100"><i id="prog"></i></div>
+</div>
 
-  <section class="parallax"></section>
-  <section class="parallax">
-    <h2></h2>
-    <p></p>
-  </section>
-  
-  <button id="themeToggle" class="theme-btn">🌙</button>
+<div class="wrap">
+<nav class="toc" aria-label="Содержание">
+  <a href="#prep">Подготовка <small>15–20</small></a>
+  <a href="#s1">Файлы сайта <small>25</small></a>
+  <a href="#s2">Dockerfile <small>30</small></a>
+  <a href="#s3">Сборка образа <small>20</small></a>
+  <a href="#s4">Запуск <small>20</small></a>
+  <a href="#s5">Управление <small>20</small></a>
+  <a href="#task">Самостоятельно <small>30</small></a>
+  <a href="#quiz">Вопросы</a>
+</nav>
 
-  <section id="schedule" class="section">
-  <h2>Расписание</h2>
-  <div class="schedule-wrapper">
-    <table class="schedule">
-      <thead>
-        <tr>
-          <th>Время</th>
-          <th>Понедельник</th>
-          <th>Вторник</th>
-          <th>Среда</th>
-          <th>Четверг</th>
-          <th>Пятница</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>9:00–10:20</td>
-          <td>
-            <div class="lesson">
-              <strong>Создание мобильных приложений</strong><br>
-              Ауд. 2/03<br>
-              Насриддинов Б.
-            </div>
-          </td>
-          <td>
-            <div class="lesson">
-              <strong>Дискретная Математика</strong><br>
-              Ауд. 2/302<br>
-              Акрамов Н.
-            </div>
-          </td>
-          <td>
-            <div class="lesson">
-              <strong>Системное Программирование</strong><br>
-              Ауд. 2/05<br>
-              Мусаджонова Д.
-            </div>
-          </td>
-          <td>
-            <div class="lesson">
-              <strong>Java-технологии</strong><br>
-              Ауд. 2/101<br>
-              Насриддинов Б.
-            </div>
-          </td>
-          <td>
-            <div class="lesson">
-              <strong>Числовые методы</strong><br>
-              Ауд. 2/101<br>
-              Кулдашева Н.
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>10:30–11:50</td>
-          <td>
-            <div class="lesson">
-              <strong>Веб технология</strong><br>
-                Ауд. 2/03<br>
-                Мусаджонова Д.
-            </div>
-          </td>
-          <td>
-            <div class="lesson">
-              <strong>Дискретная Математика</strong><br>
-              Ауд. 2/302<br>
-              Акрамов Н.
-            </div>
-          </td>
-          <td>
-            <div class="lesson">
-              <strong>Веб технология</strong><br>
-              Ауд. 2/308<br>
-              Мусаджонова Д.
-            </div>
-          </td>
-          <td>
-            <div class="lesson">
-              <strong>Веб технология</strong><br>
-              Ауд. 2/101<br>
-              Мусаджонова Д.
-            </div>
-          </td>
-          <td>
-            <div class="lesson">
-              <strong>Системное Программирование</strong><br>
-              Ауд. 2/05<br>
-              Мусаджонова Д.
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>12:00–13:20</td>
-          <td>
-            <div class="lesson">
-              <strong>Числовые методы</strong><br>
-              Ауд. 2/101<br>
-              Кулдашева Н.
-            </div>
-          </td>
-          <td>
-            <div class="lesson">
-              <strong>Создание мобильных приложений</strong><br>
-              Ауд. 2/101<br>
-              Насриддинов Б.
-            </div>
-          </td>
-          <td></td>
-          <td>
-            <div class="lesson">
-              <strong>Системное Программирование</strong><br>
-              Ауд. 2/07<br>
-              Мусаджонова Д.
-            </div>
-          </td>
-          <td>
-            <div class="lesson">
-              <strong>Java-технологии</strong><br>
-              Ауд. 2/07<br>
-              Насриддинов Б.
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+<main>
+<div class="hero">
+  <div>
+    <h1>Сайт в Docker: от файла до контейнера</h1>
+    <p class="lede"><b>Цель:</b> понять принципы контейнеризации, освоить синтаксис Dockerfile, собрать собственный образ и управлять его запуском.</p>
+    <div class="facts"><span>Веб-системы и облачные технологии</span><span>2–3 академических часа</span></div>
+  </div>
+  <div>
+    <div class="stack" id="stack" aria-label="Слои Docker-образа">
+      <button class="layer l-top" data-n="Это запущенный контейнер: образ плюс слой для записи. Образ — шаблон, контейнер — его работающий экземпляр."><b>контейнер student-web-container</b><em>:8080</em></button>
+      <button class="layer l-cmd" data-n="CMD — что выполнить при старте: nginx в режиме foreground, чтобы контейнер не завершался."><b>CMD nginx -g "daemon off;"</b><em>запуск</em></button>
+      <button class="layer l-cp" data-n="COPY — ваш index.html попадает в папку, откуда Nginx раздаёт статику."><b>COPY index.html</b><em>ваш сайт</em></button>
+      <button class="layer l-base" data-n="FROM — базовый образ: Nginx на Alpine Linux, около 20 МБ."><b>FROM nginx:alpine</b><em>~20 МБ</em></button>
+    </div>
+    <div class="stack-note" id="stack-note">Нажмите на слой, чтобы узнать, что он делает.</div>
+  </div>
+</div>
+
+<section id="prep">
+  <header><input type="checkbox" class="check" data-k="prep" aria-label="Шаг выполнен"><h2>Подготовка рабочей среды</h2><span class="min">15–20 мин</span></header>
+  <p>Нужны <b>Docker Desktop</b> (на Windows — с включённым компонентом WSL 2; на macOS — версия под Apple Silicon или Intel) и <b>VS Code</b> либо любой текстовый редактор.</p>
+  <p>Откройте PowerShell (Windows) или Терминал (macOS) и проверьте установку:</p>
+  <div class="codebox"><pre>docker --version</pre></div>
+  <div class="note">Если отображается версия Docker, среда готова к работе.</div>
+</section>
+
+<section id="s1">
+  <header><input type="checkbox" class="check" data-k="s1" aria-label="Шаг выполнен"><h2>Шаг 1. Структура проекта и файлы сайта</h2><span class="min">25 мин</span></header>
+  <ol class="steps">
+    <li>Создайте на рабочем столе папку <code>my-docker-site</code>.</li>
+    <li>Перейдите в неё через терминал:</li>
+  </ol>
+  <div class="codebox"><pre data-os-code="win">cd $HOME\Desktop\my-docker-site</pre><pre data-os-code="mac" hidden>cd ~/Desktop/my-docker-site</pre></div>
+  <ol class="steps" start="3"><li>Создайте в папке файл <code>index.html</code> и вставьте код:</li></ol>
+  <div class="codebox"><pre id="html-src">&lt;!DOCTYPE html&gt;
+&lt;html lang="ru"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Мой первый сайт в Docker&lt;/title&gt;
+    &lt;style&gt;
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        h1 { color: #2c3e50; }
+        p { color: #7f8c8d; }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="card"&gt;
+        &lt;h1&gt;🚀 Сайт успешно запущен внутри Docker!&lt;/h1&gt;
+        &lt;p&gt;Практическое занятие по облачным технологиям.&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre></div>
+  <p>Так страница будет выглядеть в браузере:</p>
+  <div class="browser"><div class="tb"><i></i><i></i><i></i><span>http://localhost:8080</span></div><iframe id="preview" title="Предпросмотр сайта" sandbox></iframe></div>
+</section>
+
+<section id="s2">
+  <header><input type="checkbox" class="check" data-k="s2" aria-label="Шаг выполнен"><h2>Шаг 2. Создание и разбор Dockerfile</h2><span class="min">30 мин</span></header>
+  <p>В той же папке создайте файл с точным названием <code>Dockerfile</code> — без расширений вроде <code>.txt</code> или <code>.html</code>. Добавьте в него код. Нажимайте на строки, чтобы увидеть разбор директив.</p>
+  <div class="dk" id="dk">
+    <button aria-pressed="true" data-n="<b>FROM</b> указывает базовый образ. <code>nginx:alpine</code> весит всего около 20 МБ — идеально для быстрого развёртывания."><span class="c"># 1. Лёгкий образ веб-сервера Nginx на базе Alpine Linux</span><br>FROM nginx:alpine</button>
+    <button aria-pressed="false" data-n="<b>COPY</b> копирует файлы с вашего компьютера (хоста) внутрь файловой системы контейнера. Здесь — в папку, откуда Nginx раздаёт статику."><span class="c"># 2. Копируем сайт в директорию, откуда Nginx раздаёт статику</span><br>COPY index.html /usr/share/nginx/html/index.html</button>
+    <button aria-pressed="false" data-n="<b>EXPOSE</b> документирует порт, который приложение использует внутри контейнера. Сам по себе порт наружу не открывает — это делает <code>-p</code> при запуске."><span class="c"># 3. Контейнер слушает порт 80</span><br>EXPOSE 80</button>
+    <button aria-pressed="false" data-n="<b>CMD</b> — команда по умолчанию при запуске контейнера. Режим foreground нужен, чтобы контейнер не завершал работу."><span class="c"># 4. Запускаем Nginx в режиме foreground</span><br>CMD ["nginx", "-g", "daemon off;"]</button>
+    <p class="dk-note" id="dk-note"></p>
+  </div>
+  <div class="codebox"><pre id="df-src"># 1. Используем официальный легковесный образ веб-сервера Nginx на базе Alpine Linux
+FROM nginx:alpine
+
+# 2. Копируем файлы нашего сайта в директорию, откуда Nginx раздаёт статику
+COPY index.html /usr/share/nginx/html/index.html
+
+# 3. Указываем, что контейнер слушает порт 80
+EXPOSE 80
+
+# 4. Запускаем Nginx в режиме foreground (чтобы контейнер не завершал работу)
+CMD ["nginx", "-g", "daemon off;"]</pre></div>
+</section>
+
+<section id="s3">
+  <header><input type="checkbox" class="check" data-k="s3" aria-label="Шаг выполнен"><h2>Шаг 3. Сборка Docker-образа</h2><span class="min">20 мин</span></header>
+  <p>Убедитесь, что терминал открыт в папке <code>my-docker-site</code>, и выполните сборку. Точка в конце обязательна.</p>
+  <div class="codebox"><pre>docker build -t my-first-site:v1 .</pre></div>
+  <ul class="flags">
+    <li><code>-t my-first-site:v1</code><span>имя образа (<code>my-first-site</code>) и его тег-версия (<code>v1</code>)</span></li>
+    <li><code>.</code><span>Docker ищет Dockerfile в текущей рабочей директории</span></li>
+  </ul>
+  <p>Проверьте, что образ появился в локальном реестре:</p>
+  <div class="codebox"><pre>docker images</pre></div>
+</section>
+
+<section id="s4">
+  <header><input type="checkbox" class="check" data-k="s4" aria-label="Шаг выполнен"><h2>Шаг 4. Запуск и проверка контейнера</h2><span class="min">20 мин</span></header>
+  <div class="codebox"><pre>docker run -d -p 8080:80 --name student-web-container my-first-site:v1</pre></div>
+  <ul class="flags">
+    <li><code>-d</code><span>detached — запуск в фоновом режиме</span></li>
+    <li><code>-p 8080:80</code><span>порт 8080 вашего ПК связан с портом 80 внутри контейнера</span></li>
+    <li><code>--name</code><span>понятное имя запущенного контейнера</span></li>
+  </ul>
+  <p>Откройте в браузере <a href="http://localhost:8080" target="_blank" rel="noopener">http://localhost:8080</a> — должна появиться карточка «Сайт успешно запущен внутри Docker!».</p>
+</section>
+
+<section id="s5">
+  <header><input type="checkbox" class="check" data-k="s5" aria-label="Шаг выполнен"><h2>Шаг 5. Управление контейнерами и отладка</h2><span class="min">20 мин</span></header>
+  <p>Отработайте основные команды управления по порядку.</p>
+  <div class="cmds">
+    <div class="cmd"><h3>Запущенные контейнеры</h3><div class="codebox"><pre>docker ps</pre></div></div>
+    <div class="cmd"><h3>Логи веб-сервера</h3><div class="codebox"><pre>docker logs student-web-container</pre></div></div>
+    <div class="cmd"><h3>Остановка</h3><div class="codebox"><pre>docker stop student-web-container</pre></div></div>
+    <div class="cmd"><h3>Удаление</h3><div class="codebox"><pre>docker rm student-web-container</pre></div></div>
   </div>
 </section>
 
-<section id="members" class="section">
-  <h2>Состав группы</h2>
-  <div class="carousel">
-    <div class="card">
-      <img src="images/ProfilePhoto/Otamurod.jpg" />
-      <h3>Рахимов Отамурод</h3>
-      <p><a href="https://t.me/rakhimovvvvvvvv" target="_blank">@rakhimov</a></p>
-    </div>
-    <div class="card">
-      <img src="images/ProfilePhoto/Merlin.jpg" />
-      <h3>Хакимжонов Исломжон</h3>
-      <p><a href="https://t.me/DanteVangob" target="_blank">@DanteVangob</a></p>
-    </div>
-    <div class="card">
-      <img src="samira.jpg" />
-      <h3>Мусабоева Самира</h3>
-      <p><a href="https://t.me/musabo_eva" target="_blank">@musabo_eva</a></p>
-    </div>
-    <div class="card">
-      <img src="images/ProfilePhoto/aziza.jpg" />
-      <h3>Фанилова Азиза</h3>
-      <p><a href="https://t.me/moti_amethyst" target="_blank">@moti_amethyst</a></p>
-    </div>
-    <div class="card">
-      <img src="images/ProfilePhoto/Ilhom.jpg" />
-      <h3>Абдухакимов Илхом</h3>
-      <p><a href="https://t.me/DanteVangob" target="_blank">@immex_o6</a></p>
-    </div>
-    <div class="card">
-      <img src="images/ProfilePhoto/danya.jpg" />
-      <h3>Войтов Данила</h3>
-      <p><a href="https://t.me/@DanielCrowley3" target="_blank">@DanielCrowley3</a></p>
-    </div>
-  </div>
+<section id="task">
+  <header><h2>Самостоятельное задание</h2><span class="min">30 мин</span></header>
+  <p>Для получения оценки внесите изменения в проект. Отмечайте выполненное:</p>
+  <ul class="tasks" id="tasks">
+    <li><label><input type="checkbox" data-k="t1"><span>Добавьте файл <code>style.css</code> и перенесите в него стили из <code>index.html</code></span></label></li>
+    <li><label><input type="checkbox" data-k="t2"><span>Измените Dockerfile: копируйте всю папку командой <code>COPY . /usr/share/nginx/html</code></span></label></li>
+    <li><label><input type="checkbox" data-k="t3"><span>Пересоберите образ под тегом <code>my-first-site:v2</code></span></label></li>
+    <li><label><input type="checkbox" data-k="t4"><span>Запустите новый контейнер на порту 8081 (<code>-p 8081:80</code>)</span></label></li>
+  </ul>
+  <div class="done-msg" id="done-msg">Всё готово. Покажите результат преподавателю: http://localhost:8081</div>
 </section>
 
-<section class="section">
-    <h2>Мобильная Разработка</h2>
-    <div class="schedule-wrapper">
-      <table class="custom-table">
-        <thead>
-          <tr>
-            <th>Дата</th>
-            <th>Тип</th>
-            <th>%</th>
-          </tr>
-        </thead>
-        <tbody>
-         
-          <tr><td>01.дек</td><td>Лекция</td><td>6,67%</td></tr>
-          <tr><td>09.дек</td><td>Практика</td><td>10,00%</td></tr>
-          <tr><td>13.дек</td><td>Лекция</td><td>13,34%</td></tr>
-          <tr><td>15.дек</td><td>Лекция</td><td>16,67%</td></tr>
-          <tr><td>16.дек</td><td>Практика</td><td>20,00%</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-  
-  <section class="section">
-    <h2>Технология Java</h2>
-    <div class="schedule-wrapper">
-      <table class="custom-table">
-        <thead>
-          <tr>
-            <th>Дата</th>
-            <th>Тип</th>
-            <th>%</th>
-          </tr>
-        </thead>
-        <tbody>
-        
-          <tr><td>28.ноя</td><td>Практика</td><td>0,00%</td></tr>
-          <tr><td>04.дек</td><td>Лекция</td><td>3,33%</td></tr>
-          <tr><td>05.дек</td><td>Практика</td><td>6,67%</td></tr>
-          <tr><td>11.дек</td><td>Лекция</td><td>10,00%</td></tr>
-          <tr><td>12.дек</td><td>Практика</td><td>13,34%</td></tr>
-          <tr><td>18.дек</td><td>Лекция</td><td>16,67%</td></tr>
-          <tr><td>19.дек</td><td>Практика</td><td>20,00%</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
+<section id="quiz">
+  <header><h2>Контрольные вопросы для защиты</h2></header>
+  <details><summary>В чём главное отличие Docker Image (образа) от Docker Container (контейнера)?</summary><p>Подумайте: что из них — неизменяемый шаблон, а что — работающий экземпляр? Сколько контейнеров можно запустить из одного образа?</p></details>
+  <details><summary>За что отвечают параметры <code>-p 8080:80</code> при запуске <code>docker run</code>?</summary><p>Какой порт слева, а какой справа? Где находится каждый из них — на вашем ПК или внутри контейнера?</p></details>
+  <details><summary>Зачем нужна директива COPY в Dockerfile?</summary><p>Где в момент сборки находятся файлы сайта и куда они должны попасть, чтобы Nginx мог их раздавать?</p></details>
+  <details><summary>Почему для контейнеризации статических сайтов часто выбирают дистрибутив alpine?</summary><p>Сравните размер образа с обычными дистрибутивами и подумайте, что это даёт при сборке и загрузке.</p></details>
+</section>
 
-  <section id="contact" class="about_section">
-    <h2>Контакты</h2>
-    <p>Электронная почта: <a href="mailto:itk2351@tift.edu">itk2351@tift.edu</a></p>
-    <p>Telegram: <a href="https://t.me/itk2351" target="_blank">@itk2351</a></p>
-  </section>
+<footer>Практическое занятие · Веб-системы и облачные технологии</footer>
+</main>
+</div>
 
-  <footer class="footer">
-    <p>© 2025 ИТК-23-51 ТИФТ. Все права защищены.</p>
-  </footer>
-  <script>
-    const themeToggle = document.getElementById("themeToggle");
+<script>
+(function(){
+  var $=function(s,r){return (r||document).querySelector(s)},$$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+  var store={get:function(k){try{return localStorage.getItem('dk-'+k)}catch(e){return null}},set:function(k,v){try{localStorage.setItem('dk-'+k,v)}catch(e){}}};
+  var root=document.documentElement;
 
-    themeToggle.addEventListener("click", () => {
-      document.body.classList.toggle("dark-theme");
-      themeToggle.textContent = document.body.classList.contains("dark-theme") ? "☀️" : "🌙";
-      localStorage.setItem("theme", document.body.classList.contains("dark-theme") ? "dark" : "light");
-    });
+  /* theme */
+  var th=store.get('theme');if(th)root.setAttribute('data-theme',th);
+  $('#theme').onclick=function(){
+    var dark=root.getAttribute('data-theme')?root.getAttribute('data-theme')==='dark':matchMedia('(prefers-color-scheme:dark)').matches;
+    var n=dark?'light':'dark';root.setAttribute('data-theme',n);store.set('theme',n);
+  };
 
-    if (localStorage.getItem("theme") === "dark") {
-      document.body.classList.add("dark-theme");
-      themeToggle.textContent = "☀️";
-    }
-  </script>
+  /* OS switch */
+  function setOS(os){
+    $$('[data-os]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.os===os)});
+    $$('[data-os-code]').forEach(function(p){p.hidden=p.dataset.osCode!==os});
+    store.set('os',os);
+  }
+  $$('.seg [data-os]').forEach(function(b){b.onclick=function(){setOS(b.dataset.os)}});
+  setOS(store.get('os')||(/Mac/i.test(navigator.platform)?'mac':'win'));
 
+  /* copy buttons */
+  $$('.codebox').forEach(function(box){
+    var btn=document.createElement('button');btn.className='cp';btn.textContent='Копировать';
+    btn.onclick=function(){
+      var pre=$$('pre',box).filter(function(p){return !p.hidden})[0];
+      var done=function(){btn.textContent='Скопировано';btn.classList.add('done');setTimeout(function(){btn.textContent='Копировать';btn.classList.remove('done')},1500)};
+      if(navigator.clipboard)navigator.clipboard.writeText(pre.textContent).then(done,function(){btn.textContent='Не удалось'});
+      else{var r=document.createRange();r.selectNodeContents(pre);var s=getSelection();s.removeAllRanges();s.addRange(r);try{document.execCommand('copy');done()}catch(e){}}
+    };
+    box.appendChild(btn);
+  });
+
+  /* progress + checkboxes */
+  var boxes=$$('input[type=checkbox][data-k]');
+  function upd(){
+    var n=boxes.filter(function(b){return b.checked}).length;
+    var p=Math.round(n/boxes.length*100),bar=$('.prog');
+    $('#prog').style.width=p+'%';bar.setAttribute('aria-valuenow',p);
+    $('#done-msg').classList.toggle('show',['t1','t2','t3','t4'].every(function(k){return $('[data-k='+k+']').checked}));
+  }
+  boxes.forEach(function(b){b.checked=store.get('c-'+b.dataset.k)==='1';b.onchange=function(){store.set('c-'+b.dataset.k,b.checked?'1':'0');upd()}});
+  upd();
+
+  /* hero layers */
+  var note=$('#stack-note');
+  $$('#stack .layer').forEach(function(l){l.onclick=function(){note.textContent=l.dataset.n}});
+
+  /* Dockerfile explorer */
+  var dkb=$$('#dk button'),dn=$('#dk-note');
+  function pick(b){dkb.forEach(function(x){x.setAttribute('aria-pressed',x===b)});dn.innerHTML=b.dataset.n}
+  dkb.forEach(function(b){b.onclick=function(){pick(b)}});pick(dkb[0]);
+
+  /* preview */
+  $('#preview').srcdoc=$('#html-src').textContent;
+
+  /* scroll-spy */
+  var links=$$('nav.toc a');
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id)})}})},{rootMargin:'-30% 0px -60% 0px'});
+  $$('main section').forEach(function(s){io.observe(s)});
+})();
+</script>
 </body>
 </html>
